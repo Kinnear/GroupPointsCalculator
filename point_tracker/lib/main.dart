@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:scoped_model/scoped_model.dart';
 import 'scoreModel.dart';
+import 'package:flutter/services.dart';
 
 void main() {
   return runApp(MyApp());
@@ -42,38 +43,62 @@ class _MyHomePageState extends State<MyHomePage> {
           children: <Widget>[
             Container(
                 margin: EdgeInsets.only(top: 2.0, bottom: 2.0),
-                padding : EdgeInsets.all(20),
+                padding: EdgeInsets.all(20),
                 width: 100,
                 color: Colors.blue[50],
                 child: Text(model.getPersonName(personIndex))),
-                Expanded(
-                  child:Container(
+            Expanded(
+              child: Container(
                   margin: EdgeInsets.only(top: 2.0, bottom: 2.0),
-                width: 200,
-                color: Colors.blue[100],
-                child: ListView.builder(
-                  scrollDirection: Axis.horizontal,
-                  shrinkWrap: true,
-                  itemCount: model
-                      .getPeopleScores()[personIndex]
-                      .getListOfScores()
-                      .length,
-                  itemBuilder: (context, index) {
-                    return Container(
-                      width: 30.0,
-                      child: Center(
-                        child: Text(model
-                            .getPeopleScores()[personIndex]
-                            .getListOfScores()[index]
-                            .toString()),
-                      ),
-                    );
-                  },
-                )),),
+                  width: 200,
+                  color: Colors.blue[100],
+                  child: ListView.builder(
+                    scrollDirection: Axis.horizontal,
+                    shrinkWrap: true,
+                    itemCount: model
+                        .getPeopleScores()[personIndex]
+                        .getListOfScores()
+                        .length,
+                    itemBuilder: (context, index) {
+                      TextEditingController txtController =
+                          new TextEditingController();
+                      txtController.text = model
+                          .getPeopleScores()[personIndex]
+                          .getListOfScores()[index]
+                          .toString();
+                      return Container(
+                        width: 40.0,
+                         padding: EdgeInsets.only(left: 10.0),
+                        child: Center(
+                            child: TextField(
+                          keyboardType: TextInputType.number,
+                          decoration: InputDecoration(
+                            border: InputBorder.none,
+                          ),
+                          inputFormatters: [
+                            BlacklistingTextInputFormatter(RegExp(
+                                "[\\+|\\.|\\-|\\*|\\,|\\(|\\=|\\ |\\/)]"))
+                          ],
+                          controller: txtController,
+                          onSubmitted: (text) {
+                            model.updatePersonScore(
+                                personIndex, index, int.parse(text));
+                          },
+                        )
+
+                            // child: Text(model
+                            //     .getPeopleScores()[personIndex]
+                            //     .getListOfScores()[index]
+                            //     .toString()),
+                            ),
+                      );
+                    },
+                  )),
+            ),
             Container(
                 color: Colors.blue[200],
                 margin: EdgeInsets.only(top: 2.0, bottom: 2.0),
-                padding : EdgeInsets.all(15.0),
+                padding: EdgeInsets.all(15.0),
                 width: 60.0,
                 child: Text(
                     model
@@ -84,17 +109,25 @@ class _MyHomePageState extends State<MyHomePage> {
             Container(
                 width: 80.0,
                 child: FlatButton(
-                color: Colors.blue[300],
-                padding : EdgeInsets.all(15.0),
+                  color: Colors.blue[300],
+                  padding: EdgeInsets.all(15.0),
                   child: Text('Add'),
                   onPressed: () {
                     showDialog(
                         context: context,
                         builder: (_) {
                           return AlertDialog(
-                            title: Text('Add Score Amount'), 
+                            title: Text('Add Score Amount'),
                             content: TextField(
-                              keyboardType: TextInputType.numberWithOptions(),
+                              autofocus: true,
+                              decoration: InputDecoration(
+                                  hintText: "Score",
+                                  border: OutlineInputBorder()),
+                              inputFormatters: [
+                                BlacklistingTextInputFormatter(RegExp(
+                                    "[\\+|\\.|\\-|\\*|\\,|\\(|\\=|\\ |\\/)]"))
+                              ],
+                              keyboardType: TextInputType.number,
                               onSubmitted: (text) {
                                 model.addNewScoreToPersonByIndex(
                                     int.parse(text), personIndex);
@@ -141,13 +174,15 @@ class _MyHomePageState extends State<MyHomePage> {
               ))),
       floatingActionButton: FloatingActionButton(
         onPressed: () {
-          print("pressed");
           showDialog(
             context: context,
             builder: (_) {
               return AlertDialog(
                 title: Text('Add Person'),
                 content: TextField(
+                  autofocus: true,
+                  decoration: InputDecoration(
+                      hintText: "Person's Name", border: OutlineInputBorder()),
                   keyboardType: TextInputType.text,
                   onSubmitted: (text) {
                     ScoreModel model = ScopedModel.of<ScoreModel>(context);

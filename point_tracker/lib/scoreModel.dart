@@ -27,6 +27,11 @@ class Person {
     }
     return totalScore;
   }
+
+  void modifyScore(int index, int updatedScore)
+  {
+    _scores[index] = updatedScore;
+  }
 }
 
 class ScoreModel extends Model {
@@ -96,6 +101,12 @@ class ScoreModel extends Model {
       }
     }
     return false;
+  }
+
+  void updatePersonScore(int personIndex, int scoreIndex, int updatedScore)
+  {
+    _allPeople[personIndex].modifyScore(scoreIndex, updatedScore);
+    notifyListeners();
   }
 
   List<Person> getPeopleScores() {
