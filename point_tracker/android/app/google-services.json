@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "244723491125",
+    "firebase_url": "https://grouppointscalculator.firebaseio.com",
+    "project_id": "grouppointscalculator",
+    "storage_bucket": "grouppointscalculator.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:244723491125:android:70a9609012092283",
+        "android_client_info": {
+          "package_name": "com.example.point_tracker"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "244723491125-kjggj2mtrbmono50rdi5h136k43b66g3.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDGJ-3zuxHOagLm_C2NMQ1TnVPaH2ligpw"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "244723491125-kjggj2mtrbmono50rdi5h136k43b66g3.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

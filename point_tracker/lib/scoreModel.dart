@@ -28,8 +28,7 @@ class Person {
     return totalScore;
   }
 
-  void modifyScore(int index, int updatedScore)
-  {
+  void modifyScore(int index, int updatedScore) {
     _scores[index] = updatedScore;
   }
 }
@@ -61,13 +60,11 @@ class ScoreModel extends Model {
     // addNewScoreToPersonByName(20, 'Mika1');
     // addNewScoreToPersonByName(20, 'Mika1');
     // addNewScoreToPersonByName(30, 'Mika1');
-
   }
 
   List<Person> _allPeople = new List<Person>();
-  
-  String getPersonName(int index)
-  {
+
+  String getPersonName(int index) {
     return _allPeople[index].getName();
   }
 
@@ -84,10 +81,10 @@ class ScoreModel extends Model {
     return true;
   }
 
-    // adds a new score to an existing person (via index identifier)
+  // adds a new score to an existing person (via index identifier)
   void addNewScoreToPersonByIndex(int score, int index) {
-      _allPeople[index].addNewScore(score);
-      notifyListeners();
+    _allPeople[index].addNewScore(score);
+    notifyListeners();
   }
 
   // adds a new score to an existing person (via string name identifier)
@@ -103,8 +100,7 @@ class ScoreModel extends Model {
     return false;
   }
 
-  void updatePersonScore(int personIndex, int scoreIndex, int updatedScore)
-  {
+  void updatePersonScore(int personIndex, int scoreIndex, int updatedScore) {
     _allPeople[personIndex].modifyScore(scoreIndex, updatedScore);
     notifyListeners();
   }

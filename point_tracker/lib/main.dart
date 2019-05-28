@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:scoped_model/scoped_model.dart';
 import 'scoreModel.dart';
 import 'package:flutter/services.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 
 void main() {
   return runApp(MyApp());
@@ -113,6 +114,7 @@ class _MyHomePageState extends State<MyHomePage> {
                   padding: EdgeInsets.all(15.0),
                   child: Text('Add'),
                   onPressed: () {
+                    print("hbsahdbda");
                     showDialog(
                         context: context,
                         builder: (_) {
