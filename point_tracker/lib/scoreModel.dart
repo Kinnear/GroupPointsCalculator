@@ -38,19 +38,34 @@ class Person {
 class ScoreModel extends Model {
   final firebaseSessionInstance = Firestore.instance.collection('session');
 
-  // Future<List<Person>> syncFirebaseSessionCollection() async
-  // {
-
-  // }
-
   ScoreModel() {
     // Set transaction to update the model whenever firebase sends us any updated data about the model
     // In other words. create a listener
-
     firebaseSessionInstance.snapshots().listen((onData) {
-      print(onData.documents.map((DocumentSnapshot document) {
-        print(document);
-      }));
+
+        // Whenever anything in our collection updates, update our model too
+        List<Person> newUpdatedList = new List<Person>();
+
+        for(int i = 0; i < onData.documents.length; i++)
+        {
+          Person person = new Person(onData.documents[i].data['name'].toString());
+
+          if(onData.documents[i].data['score'] != null)
+          {
+            List<int> personScoreList = new List<int>.from(onData.documents[i].data['score']);
+
+            for(int j = 0; j < personScoreList.length; j++)
+            { 
+              person.addNewScore(personScoreList[j]);
+            }
+          }
+
+          newUpdatedList.add(person);
+        }
+
+        _allPeople = newUpdatedList;
+
+        notifyListeners();
     });
 
     // addNewPerson('Kinnear');
@@ -94,7 +109,8 @@ class ScoreModel extends Model {
       }
     }
 
-    _allPeople.add(new Person(name));
+    // OLD CODE
+    // _allPeople.add(new Person(name));
 
     // Firebase Test - Set the document ID as the person's name
     firebaseSessionInstance.document(name).setData({'name': name});
@@ -105,7 +121,9 @@ class ScoreModel extends Model {
 
   // adds a new score to an existing person (via index identifier)
   void addNewScoreToPersonByIndex(int score, int index) {
-    _allPeople[index].addNewScore(score);
+
+    // OLD CODE
+    // _allPeople[index].addNewScore(score);
 
     // Get a reference of the document id with the name of the person
 
@@ -144,7 +162,9 @@ class ScoreModel extends Model {
   bool addNewScoreToPersonByName(int score, String name) {
     for (int i = 0; i < _allPeople.length; i++) {
       if (_allPeople[i].getName() == name) {
-        _allPeople[i].addNewScore(score);
+
+        // OLD CODE
+        // _allPeople[i].addNewScore(score);
 
         firebaseSessionInstance
             .document(name)
@@ -175,7 +195,9 @@ class ScoreModel extends Model {
   }
 
   void updatePersonScore(int personIndex, int scoreIndex, int updatedScore) {
-    _allPeople[personIndex].modifyScore(scoreIndex, updatedScore);
+
+    // OLD CODE
+    // _allPeople[personIndex].modifyScore(scoreIndex, updatedScore);
 
     firebaseSessionInstance
         .document(_allPeople[personIndex].getName())
