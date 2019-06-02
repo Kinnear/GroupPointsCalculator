@@ -86,11 +86,6 @@ class _MyHomePageState extends State<MyHomePage> {
                                 personIndex, index, int.parse(text));
                           },
                         )
-
-                            // child: Text(model
-                            //     .getPeopleScores()[personIndex]
-                            //     .getListOfScores()[index]
-                            //     .toString()),
                             ),
                       );
                     },
@@ -114,7 +109,6 @@ class _MyHomePageState extends State<MyHomePage> {
                   padding: EdgeInsets.all(15.0),
                   child: Text('Add'),
                   onPressed: () {
-                    print("hbsahdbda");
                     showDialog(
                         context: context,
                         builder: (_) {
